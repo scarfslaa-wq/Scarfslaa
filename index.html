@@ -489,7 +489,7 @@ height:280px
 </header>
 
 <div id="anasayfa" class="kapak">
-<img src="img/20260915013835.jpg" alt="Scarfslaa">
+<img src="20260915013835.jpg" alt="Scarfslaa">
 </div>
 
 <section id="urunler">
@@ -772,7 +772,7 @@ fiyat:399,
 eskiFiyat:0,
 stok:10,
 kategori:"jakar",
-foto:"img/20260915015938.jpg"
+foto:"20260915015938.jpg"
 },
 {
 isim:"Desenli Eşarp",
@@ -781,7 +781,7 @@ fiyat:449,
 eskiFiyat:0,
 stok:10,
 kategori:"soft",
-foto:"img/20260915015928.jpg"
+foto:"20260915015928.jpg"
 },
 {
 isim:"Şal Aksesuar",
@@ -790,7 +790,7 @@ fiyat:199,
 eskiFiyat:0,
 stok:10,
 kategori:"aksesuar",
-foto:"img/20260915015828.jpg"
+foto:"20260915015828.jpg"
 }
 ];
 
@@ -806,7 +806,19 @@ else urun.kategori="jakar";
 if(typeof urun.eskiFiyat!=="number") urun.eskiFiyat=0;
 });
 
-localStorage.setItem("scarfslaaUrunler",JSON.stringify(urunler));
+try{
+
+localStorage.setItem(
+"scarfslaaUrunler",
+JSON.stringify(urunler)
+);
+
+}catch(hata){
+
+alert("❌ Ürün kaydedilemedi. Telefon depolama alanı dolu olabilir. Eski ürünlerden bazılarını silip tekrar deneyin.");
+return;
+
+}
 
 var sepet=[];
 var favoriler=JSON.parse(localStorage.getItem("scarfslaaFavoriler"))||[];
@@ -1187,6 +1199,47 @@ reader.readAsDataURL(dosya);
 
 }
 
+function fotoKucult(dosya,callback){
+
+var reader=new FileReader();
+
+reader.onload=function(e){
+
+var img=new Image();
+
+img.onload=function(){
+
+var maxBoyut=1200;
+var oran=Math.min(1,maxBoyut/Math.max(img.width,img.height));
+
+var canvas=document.createElement("canvas");
+canvas.width=Math.round(img.width*oran);
+canvas.height=Math.round(img.height*oran);
+
+var ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+var sonuc=canvas.toDataURL("image/jpeg",0.75);
+callback(sonuc);
+
+};
+
+img.onerror=function(){
+alert("❌ Fotoğraf okunamadı. Başka bir fotoğraf deneyin.");
+};
+
+img.src=e.target.result;
+
+};
+
+reader.onerror=function(){
+alert("❌ Fotoğraf okunamadı.");
+};
+
+reader.readAsDataURL(dosya);
+
+}
+
 function urunKaydet(){
 
 var ad=document.getElementById("yonetimUrunAdi").value.trim();
@@ -1249,13 +1302,9 @@ yonetimUrunleriGoster();
 
 if(dosya){
 
-var reader=new FileReader();
-
-reader.onload=function(e){
-kaydet(e.target.result);
-};
-
-reader.readAsDataURL(dosya);
+fotoKucult(dosya,function(kucukFoto){
+kaydet(kucukFoto);
+});
 
 }else{
 
