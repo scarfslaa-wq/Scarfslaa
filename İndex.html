@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scarfslaa</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f8f3ee;
+color:#342a27;
+overflow-x:hidden
+}
+
+header{
+background:#342a27;
+color:white;
+text-align:center;
+padding:25px 10px 20px
+}
+
+.logo{
+font-family:Georgia,serif;
+font-size:36px;
+font-weight:bold;
+letter-spacing:1px;
+margin-bottom:8px
+}
+
+.alt-baslik{font-size:16px}
+
+.arama-kutusu{
+width:92%;
+max-width:500px;
+margin:16px auto 0
+}
+
+.arama-kutusu input{
+width:100%;
+padding:12px 15px;
+border:0;
+border-radius:25px;
+font-size:15px;
+outline:none
+}
+
+nav{
+width:92%;
+max-width:500px;
+margin:15px auto 0;
+background:#5d4d46;
+border-radius:16px;
+padding:10px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+align-items:center;
+gap:4px
+}
+
+nav a,nav button{
+color:white;
+text-decoration:none;
+border:0;
+background:none;
+font-size:14px;
+padding:7px 9px;
+cursor:pointer;
+white-space:nowrap
+}
+
+.sepet-link{
+display:inline-flex;
+align-items:center;
+gap:3px
+}
+
+.sepet-rozet,.favori-rozet{
+background:#e52b2b;
+color:white;
+min-width:20px;
+height:20px;
+padding:0 5px;
+border-radius:50%;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:bold
+}
+
+.yonetim-link{
+background:#2c211e!important;
+border-radius:25px!important;
+padding:8px 13px!important
+}
+
+.kapak{
+width:100%;
+overflow:hidden
+}
+
+.kapak img{
+width:100%;
+height:auto;
+display:block
+}
+
+section{
+width:94%;
+max-width:1100px;
+margin:35px auto
+}
+
+h1,h2{text-align:center}
+
+.urun-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px
+}
+
+.urun-kart{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 4px 18px #0001;
+position:relative;
+transition:.2s
+}
+
+.urun-kart:hover{transform:translateY(-3px)}
+
+.urun-kart img{
+width:100%;
+height:280px;
+object-fit:cover;
+display:block;
+cursor:pointer
+}
+
+.urun-bilgi{
+padding:16px
+}
+
+.urun-bilgi h3{
+margin:0 0 8px
+}
+
+.urun-aciklama{
+font-size:14px;
+color:#776b65;
+min-height:38px
+}
+
+.eski-fiyat{
+text-decoration:line-through;
+color:#999;
+font-size:14px;
+margin-right:7px
+}
+
+.yeni-fiyat{
+font-size:20px;
+font-weight:bold
+}
+
+.indirim{
+display:inline-block;
+background:#d7b46a;
+color:white;
+padding:4px 8px;
+border-radius:8px;
+font-size:12px;
+margin-top:6px
+}
+
+.stok{
+font-size:13px;
+margin:8px 0;
+color:#665750
+}
+
+.ana-buton{
+width:100%;
+border:0;
+background:#342a27;
+color:white;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+font-size:15px
+}
+
+.ana-buton:hover{background:#5d4d46}
+
+.favori-btn{
+position:absolute;
+right:10px;
+top:10px;
+width:40px;
+height:40px;
+border:0;
+border-radius:50%;
+background:white;
+font-size:23px;
+cursor:pointer;
+box-shadow:0 2px 10px #0002;
+z-index:2
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:1000;
+align-items:center;
+justify-content:center;
+padding:15px
+}
+
+.modal-kutu{
+background:#fff;
+width:100%;
+max-width:600px;
+max-height:90vh;
+overflow:auto;
+border-radius:20px;
+padding:22px;
+position:relative
+}
+
+.modal-kapat{
+position:absolute;
+right:18px;
+top:10px;
+font-size:32px;
+cursor:pointer
+}
+
+.sepet-satiri,.favori-satiri{
+padding:12px 0;
+border-bottom:1px solid #eee
+}
+
+.sepet-satiri{
+display:flex;
+align-items:center;
+gap:10px
+}
+
+.sepet-satiri img{
+width:65px;
+height:65px;
+object-fit:cover;
+border-radius:10px
+}
+
+.sepet-satiri-bilgi{
+flex:1
+}
+
+.miktar-btn{
+border:0;
+background:#eee;
+border-radius:8px;
+padding:5px 10px;
+cursor:pointer
+}
+
+.toplam{
+font-size:20px;
+font-weight:bold;
+margin:18px 0
+}
+
+.favori-satiri{
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.favori-satiri img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:12px
+}
+
+.favori-bos{
+text-align:center;
+padding:30px 10px
+}
+
+.form-grup{
+margin-bottom:15px
+}
+
+.form-grup label{
+display:block;
+font-weight:bold;
+margin-bottom:6px
+}
+
+.form-grup input,
+.form-grup textarea,
+.form-grup select{
+width:100%;
+padding:11px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:15px;
+font-family:Arial
+}
+
+.form-grup textarea{
+min-height:90px;
+resize:vertical
+}
+
+.ozet{
+background:#f7f2ed;
+padding:15px;
+border-radius:12px;
+margin-bottom:18px
+}
+
+.foto-onizleme{
+display:none;
+width:100%;
+max-height:230px;
+object-fit:cover;
+border-radius:12px;
+margin-top:10px
+}
+
+.yonetim-liste{
+margin-top:20px
+}
+
+.yonetim-urun{
+border:1px solid #eee;
+border-radius:14px;
+padding:12px;
+margin-bottom:10px;
+background:#fafafa
+}
+
+.yonetim-urun img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:10px;
+float:left;
+margin-right:12px
+}
+
+.temizle{clear:both}
+
+.kucuk-buton{
+border:0;
+padding:8px 10px;
+border-radius:8px;
+cursor:pointer;
+margin:4px
+}
+
+.duzenle{background:#d7b46a;color:white}
+.sil{background:#c0392b;color:white}
+
+.alt-bilgi{
+text-align:center;
+padding:35px 15px;
+background:#342a27;
+color:white;
+margin-top:40px
+}
+
+#fotoPenceresi{
+display:none;
+position:fixed;
+inset:0;
+background:#000d;
+z-index:2000;
+align-items:center;
+justify-content:center;
+padding:20px
+}
+
+#fotoPenceresi img{
+max-width:95%;
+max-height:90%;
+object-fit:contain;
+border-radius:12px
+}
+
+.kapat{
+position:absolute;
+right:25px;
+top:10px;
+color:white;
+font-size:40px;
+cursor:pointer
+}
+
+.detay-kutu img{
+width:100%;
+max-height:350px;
+object-fit:cover;
+border-radius:15px
+}
+
+.detay-fiyat{
+font-size:22px;
+font-weight:bold;
+margin:12px 0
+}
+
+@media(max-width:700px){
+.urun-grid{grid-template-columns:1fr 1fr}
+.urun-kart img{height:220px}
+}
+
+@media(max-width:550px){
+header{padding:20px 8px 15px}
+.logo{font-size:32px}
+.alt-baslik{font-size:15px}
+
+nav{
+width:88%;
+max-width:390px;
+padding:9px 7px;
+gap:2px 3px
+}
+
+nav a,nav button{
+font-size:13px;
+padding:6px 7px
+}
+
+.yonetim-link{
+padding:7px 11px!important
+}
+
+.urun-grid{
+grid-template-columns:1fr
+}
+
+.urun-kart img{
+height:280px
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">SCARFSLAA</div>
+<div class="alt-baslik">Şal • Eşarp • Aksesuar</div>
+
+<div class="arama-kutusu">
+<input id="urunArama" type="search" placeholder="🔎 Ürün ara...">
+</div>
+
+<nav>
+<a href="#anasayfa">Ana Sayfa</a>
+<a href="#urunler">Ürünler</a>
+
+<button onclick="favoriAc()" class="sepet-link">
+❤️ Favorilerim
+<span id="favoriSayisi" class="favori-rozet">0</span>
+</button>
+
+<button onclick="sepetAc()" class="sepet-link">
+🛒 Sepetim
+<span id="sepetSayisi" class="sepet-rozet">0</span>
+</button>
+
+<a href="#hakkimizda">Hakkımızda</a>
+<a href="#iletisim">İletişim</a>
+<button onclick="yonetimiAc()" class="yonetim-link">🔐 Yönetim</button>
+</nav>
+</header>
+
+<div id="anasayfa" class="kapak">
+<img src="20260915013835.jpg" alt="Scarfslaa">
+</div>
+
+<section id="urunler">
+<h2>✨ Ürünlerimiz</h2>
+<div id="urunGrid" class="urun-grid"></div>
+</section>
+
+<section id="hakkimizda">
+<h2>🤎 Hakkımızda</h2>
+<p style="text-align:center;line-height:1.7">
+SCARFSLAA olarak şal, eşarp ve aksesuar ürünlerini
+zarif ve şık tasarımlarla sizlerle buluşturuyoruz.
+</p>
+</section>
+
+<section id="iletisim">
+<h2>📩 İletişim</h2>
+
+<div class="ozet">
+<p><strong>Instagram:</strong> @scarfslaa</p>
+<p><strong>E-posta:</strong> scarfslaa@gmail.com</p>
+</div>
+
+<button id="formAcButonu" class="ana-buton">
+📦 Sipariş Formu Aç
+</button>
+</section>
+
+<div id="sepetAlani" class="modal">
+<div class="modal-kutu">
+
+<span class="modal-kapat" id="sepetKapatButonu">×</span>
+
+<h2>🛒 Sepetim</h2>
+
+<div id="sepetListesi"></div>
+
+<div class="toplam">
+Ürün Toplamı: <span id="urunToplami">0</span> TL
+</div>
+
+<button id="formAcButonu2" class="ana-buton">
+📦 Sipariş Formuna Geç
+</button>
+
+</div>
+</div>
+
+<div id="favoriAlani" class="modal">
+<div class="modal-kutu">
+
+<span class="modal-kapat" id="favoriKapatButonu">×</span>
+
+<h2>❤️ Favorilerim</h2>
+
+<div id="favoriListesi"></div>
+
+</div>
+</div>
+
+<div id="siparisAlani" class="modal">
+<div class="modal-kutu">
+
+<span class="modal-kapat" id="siparisKapatButonu">×</span>
+
+<h2>📦 Sipariş Formu</h2>
+
+<div class="ozet">
+<strong>Sipariş Özeti</strong>
+<div id="siparisOzeti"></div>
+
+<p>
+<strong>Ödenecek Tutar:</strong>
+<span id="havaleTutari">0</span> TL
+</p>
+
+<hr>
+
+<strong>💳 Ödeme Yöntemi</strong>
+<p>Havale / EFT</p>
+
+<div id="havaleBilgileri"></div>
+</div>
+
+<form id="siparisForm">
+
+   
+<input type="hidden" name="access_key" value="92a8de06-e548-4d5d-9168-b777e6983f09">
+
+<input type="hidden" name="subject" value="SCARFSLAA Yeni Sipariş">
+<input type="hidden" name="from_name" value="Scarfslaa Sipariş Sistemi">
+<input type="hidden" name="odeme_yontemi" value="HAVALE / EFT">
+<input type="hidden" name="siparis_detayi" id="siparisDetayi">
+
+<div class="form-grup">
+<label>Ad Soyad</label>
+<input type="text" name="name" required>
+</div>
+
+<div class="form-grup">
+<label>E-posta</label>
+<input type="email" name="email" required>
+</div>
+
+<div class="form-grup">
+<label>Telefon</label>
+<input type="tel" name="telefon" required>
+</div>
+
+<div class="form-grup">
+<label>Adres</label>
+<textarea name="adres" required></textarea>
+</div>
+
+<div class="form-grup">
+<label>Not</label>
+<textarea name="not" placeholder="Varsa sipariş notunuz..."></textarea>
+</div>
+
+<button type="submit" class="ana-buton">
+✅ Siparişi Gönder
+</button>
+
+</form>
+
+</div>
+</div>
+
+<div id="sifreAlani" class="modal">
+<div class="modal-kutu">
+
+<span class="modal-kapat" onclick="sifreKapat()">×</span>
+
+<h2>🔐 Yönetim Girişi</h2>
+
+<div class="form-grup">
+<label>Yönetim Şifresi</label>
+<input id="yonetimSifre" type="password">
+</div>
+
+<p id="sifreHata" style="color:#c0392b"></p>
+
+<button class="ana-buton" onclick="sifreKontrol()">
+Giriş Yap
+</button>
+
+</div>
+</div>
+
+<div id="yonetimAlani" class="modal">
+<div class="modal-kutu">
+
+<span class="modal-kapat" onclick="yonetimKapat()">×</span>
+
+<h2>⚙️ Yönetim Paneli</h2>
+
+<h3>➕ Ürün Ekle / Düzenle</h3>
+
+<input type="hidden" id="duzenlenenIndex" value="-1">
+
+<div class="form-grup">
+<label>Ürün Adı</label>
+<input id="yonetimUrunAdi" type="text">
+</div>
+
+<div class="form-grup">
+<label>Açıklama</label>
+<textarea id="yonetimAciklama"></textarea>
+</div>
+
+<div class="form-grup">
+<label>Kategori</label>
+<select id="yonetimKategori">
+<option value="jakar">Jakar Şal</option>
+<option value="penye">Penye Şal</option>
+<option value="soft">Soft Eşarp</option>
+<option value="aksesuar">Aksesuar</option>
+</select>
+</div>
+
+<div class="form-grup">
+<label>Normal Fiyat</label>
+<input id="yonetimNormalFiyat" type="number">
+</div>
+
+<div class="form-grup">
+<label>İndirimli Fiyat</label>
+<input id="yonetimIndirimliFiyat" type="number">
+</div>
+
+<div class="form-grup">
+<label>Stok</label>
+<input id="yonetimStok" type="number">
+</div>
+
+<div class="form-grup">
+<label>📸 Ürün Fotoğrafı</label>
+<input id="yonetimFoto" type="file" accept="image/*" onchange="fotoOnizle()">
+<img id="fotoOnizleme" class="foto-onizleme" src="" alt="Fotoğraf önizleme">
+</div>
+
+<button class="ana-buton" onclick="urunKaydet()">
+💾 Ürünü Kaydet
+</button>
+
+<button class="ana-buton" onclick="formuTemizle()" style="margin-top:8px">
+🧹 Formu Temizle
+</button>
+
+<hr style="margin:25px 0">
+
+<h3>🏦 Ödeme Bilgileri</h3>
+
+<div class="form-grup">
+<label>Banka</label>
+<input id="bankaAdi" type="text">
+</div>
+
+<div class="form-grup">
+<label>Hesap Sahibi</label>
+<input id="hesapSahibi" type="text">
+</div>
+
+<div class="form-grup">
+<label>IBAN</label>
+<input id="ibanInput" type="text">
+</div>
+
+<button class="ana-buton" onclick="odemeBilgileriniKaydet()">
+💾 Ödeme Bilgilerini Kaydet
+</button>
+
+<hr style="margin:25px 0">
+
+<h3>📦 Ürün Yönetimi</h3>
+<div id="yonetimUrunleri" class="yonetim-liste"></div>
+
+</div>
+</div>
+
+<div id="urunDetayAlani" class="modal">
+<div class="modal-kutu detay-kutu">
+
+<span class="modal-kapat" onclick="detayKapat()">×</span>
+
+<img id="detayFoto" src="" alt="Ürün">
+
+<h2 id="detayBaslik"></h2>
+
+<p id="detayAciklama"></p>
+
+<p id="detayStok"></p>
+
+<div id="detayFiyatAlani" class="detay-fiyat"></div>
+
+<button id="detaySepetButonu" class="ana-buton">
+🛒 Sepete Ekle
+</button>
+
+</div>
+</div>
+
+<div id="fotoPenceresi" onclick="fotoKapat()">
+<span class="kapat">×</span>
+<img id="buyukFoto" src="" alt="Ürün">
+</div>
+
+<footer class="alt-bilgi">
+<strong>SCARFSLAA</strong>
+<p>Şal • Eşarp • Aksesuar</p>
+</footer>
+
+<script>
+
+var varsayilanUrunler=[
+{
+isim:"İpek Şal",
+aciklama:"Zarif ve şık ipek şal.",
+fiyat:399,
+eskiFiyat:0,
+stok:10,
+kategori:"jakar",
+foto:"20260915015938.jpg"
+},
+{
+isim:"Desenli Eşarp",
+aciklama:"Şık desenli eşarp.",
+fiyat:449,
+eskiFiyat:0,
+stok:10,
+kategori:"soft",
+foto:"20260915015928.jpg"
+},
+{
+isim:"Şal Aksesuar",
+aciklama:"Şal ve eşarplarınız için zarif aksesuar.",
+fiyat:199,
+eskiFiyat:0,
+stok:10,
+kategori:"aksesuar",
+foto:"20260915015828.jpg"
+}
+];
+
+var urunler=JSON.parse(localStorage.getItem("scarfslaaUrunler"))||varsayilanUrunler;
+
+urunler.forEach(function(urun){
+if(!urun.kategori){
+if(urun.isim.toLowerCase().includes("aksesuar")) urun.kategori="aksesuar";
+else if(urun.isim.toLowerCase().includes("eşarp")) urun.kategori="soft";
+else if(urun.isim.toLowerCase().includes("penye")) urun.kategori="penye";
+else urun.kategori="jakar";
+}
+if(typeof urun.eskiFiyat!=="number") urun.eskiFiyat=0;
+});
+
+try{
+
+localStorage.setItem(
+"scarfslaaUrunler",
+JSON.stringify(urunler)
+);
+
+}catch(hata){
+
+alert("❌ Ürün kaydedilemedi. Telefon depolama alanı dolu olabilir. Eski ürünlerden bazılarını silip tekrar deneyin.");
+return;
+
+}
+
+var sepet=[];
+var favoriler=JSON.parse(localStorage.getItem("scarfslaaFavoriler"))||[];
+
+var odemeBilgileri=
+JSON.parse(localStorage.getItem("scarfslaaOdeme"))||{
+banka:"Yapı Kredi",
+hesap:"Hesap Sahibi",
+iban:"****IBAN"
+};
+
+function urunleriGoster(){
+
+var grid=document.getElementById("urunGrid");
+var arama=document.getElementById("urunArama").value.toLowerCase();
+
+grid.innerHTML="";
+
+urunler.forEach(function(urun,index){
+
+if(arama && !urun.isim.toLowerCase().includes(arama)) return;
+
+var kart=document.createElement("div");
+kart.className="urun-kart";
+
+var favoride=favoriler.indexOf(index)!==-1;
+
+var fiyatHTML="";
+
+if(urun.eskiFiyat>urun.fiyat){
+var oran=Math.round((1-urun.fiyat/urun.eskiFiyat)*100);
+
+fiyatHTML=
+'<span class="eski-fiyat">'+urun.eskiFiyat+' TL</span>'+
+'<span class="yeni-fiyat">'+urun.fiyat+' TL</span>'+
+'<br><span class="indirim">%'+oran+' İndirim</span>';
+
+}else{
+fiyatHTML='<span class="yeni-fiyat">'+urun.fiyat+' TL</span>';
+}
+
+kart.innerHTML=
+'<button class="favori-btn">'+(favoride?"❤️":"🤍")+'</button>'+
+'<img src="'+urun.foto+'" alt="'+urun.isim+'" class="urun-foto">'+
+'<div class="urun-bilgi">'+
+'<h3>'+urun.isim+'</h3>'+
+'<div class="urun-aciklama">'+urun.aciklama+'</div>'+
+'<div style="margin-top:10px">'+fiyatHTML+'</div>'+
+'<div class="stok">Stok: '+urun.stok+'</div>'+
+'<button class="ana-buton sepete-ekle">🛒 Sepete Ekle</button>'+
+'</div>';
+
+kart.querySelector(".favori-btn").onclick=function(){
+favoriDegistir(index);
+};
+
+kart.querySelector(".urun-foto").onclick=function(){
+fotoAc(urun.foto);
+};
+
+kart.querySelector(".sepete-ekle").onclick=function(){
+sepeteEkle(index,this);
+};
+
+kart.querySelector(".urun-foto").ondblclick=function(){
+detayAc(index);
+};
+
+grid.appendChild(kart);
+
+});
+
+favoriSayisiniGoster();
+}
+
+function sepeteEkle(index,buton){
+
+var urun=urunler[index];
+
+if(urun.stok<=0){
+alert("Bu ürün stokta yok.");
+return;
+}
+
+var mevcut=sepet.find(function(item){
+return item.index===index;
+});
+
+if(mevcut){
+if(mevcut.adet<urun.stok) mevcut.adet++;
+else{
+alert("Stok adedine ulaştınız.");
+return;
+}
+}else{
+sepet.push({
+index:index,
+isim:urun.isim,
+fiyat:urun.fiyat,
+adet:1,
+foto:urun.foto
+});
+}
+
+if(buton){
+buton.textContent="Sepete Eklendi ✓";
+}
+
+sepetiGoster();
+}
+
+function sepetiGoster(){
+
+var liste=document.getElementById("sepetListesi");
+liste.innerHTML="";
+
+var toplam=0;
+var adetToplam=0;
+
+sepet.forEach(function(urun,index){
+
+toplam+=urun.fiyat*urun.adet;
+adetToplam+=urun.adet;
+
+var satir=document.createElement("div");
+satir.className="sepet-satiri";
+
+satir.innerHTML=
+'<img src="'+urun.foto+'" alt="">'+
+'<div class="sepet-satiri-bilgi">'+
+'<strong>'+urun.isim+'</strong><br>'+
+urun.fiyat+' TL x '+urun.adet+
+'<br>'+
+'<button class="miktar-btn" onclick="azalt('+index+')">−</button> '+
+'<strong>'+urun.adet+'</strong> '+
+'<button class="miktar-btn" onclick="arttir('+index+')">+</button> '+
+'<button class="kucuk-buton sil" onclick="sil('+index+')">🗑️</button>'+
+'</div>';
+
+liste.appendChild(satir);
+
+});
+
+if(sepet.length===0){
+liste.innerHTML='<p>Sepetiniz boş.</p>';
+}
+
+document.getElementById("urunToplami").textContent=toplam;
+document.getElementById("sepetSayisi").textContent=adetToplam;
+
+}
+
+function arttir(index){
+
+var urun=urunler[sepet[index].index];
+
+if(sepet[index].adet<urun.stok){
+sepet[index].adet++;
+}else{
+alert("Stok adedine ulaştınız.");
+}
+
+sepetiGoster();
+}
+
+function azalt(index){
+
+if(sepet[index].adet>1){
+sepet[index].adet--;
+}else{
+sepet.splice(index,1);
+}
+
+sepetiGoster();
+}
+
+function sil(index){
+sepet.splice(index,1);
+sepetiGoster();
+}
+
+function sepetAc(){
+sepetiGoster();
+document.getElementById("sepetAlani").style.display="flex";
+}
+
+function sepetKapat(){
+document.getElementById("sepetAlani").style.display="none";
+}
+
+function favoriDegistir(index){
+
+var sira=favoriler.indexOf(index);
+
+if(sira===-1){
+favoriler.push(index);
+}else{
+favoriler.splice(sira,1);
+}
+
+localStorage.setItem(
+"scarfslaaFavoriler",
+JSON.stringify(favoriler)
+);
+
+urunleriGoster();
+favorileriGoster();
+}
+
+function favoriSayisiniGoster(){
+document.getElementById("favoriSayisi").textContent=favoriler.length;
+}
+
+function favorileriGoster(){
+
+var liste=document.getElementById("favoriListesi");
+liste.innerHTML="";
+
+if(favoriler.length===0){
+liste.innerHTML='<div class="favori-bos">🤍 Henüz favori ürününüz yok.</div>';
+return;
+}
+
+favoriler.forEach(function(index){
+
+if(!urunler[index]) return;
+
+var urun=urunler[index];
+
+var satir=document.createElement("div");
+satir.className="favori-satiri";
+
+satir.innerHTML=
+'<img src="'+urun.foto+'" alt="">'+
+'<div style="flex:1">'+
+'<strong>'+urun.isim+'</strong><br>'+
+urun.fiyat+' TL'+
+'</div>'+
+'<button class="kucuk-buton sil">🗑️</button>';
+
+satir.querySelector("button").onclick=function(){
+favoriDegistir(index);
+};
+
+liste.appendChild(satir);
+
+});
+
+}
+
+function favoriAc(){
+favorileriGoster();
+document.getElementById("favoriAlani").style.display="flex";
+}
+
+function favoriKapat(){
+document.getElementById("favoriAlani").style.display="none";
+}
+
+function siparisAc(){
+
+if(sepet.length===0){
+alert("Önce sepete ürün eklemelisin.");
+return;
+}
+
+var ozet="";
+var toplam=0;
+
+sepet.forEach(function(urun){
+ozet+=urun.isim+" x "+urun.adet+" = "+(urun.fiyat*urun.adet)+" TL\n";
+toplam+=urun.fiyat*urun.adet;
+});
+
+document.getElementById("siparisOzeti").innerText=ozet;
+document.getElementById("havaleTutari").textContent=toplam;
+document.getElementById("siparisDetayi").value=ozet+"TOPLAM: "+toplam+" TL";
+
+havaleBilgileriniGoster();
+
+document.getElementById("siparisAlani").style.display="flex";
+}
+
+function siparisKapat(){
+document.getElementById("siparisAlani").style.display="none";
+}
+
+function havaleBilgileriniGoster(){
+
+document.getElementById("havaleBilgileri").innerHTML=
+"<br><strong>"+odemeBilgileri.banka+"</strong><br><br>"+
+"<strong>Hesap Sahibi:</strong> "+odemeBilgileri.hesap+
+"<br><br><strong>IBAN:</strong><br>"+
+odemeBilgileri.iban+
+"<br><br><small>Ödemeyi yaptıktan sonra sipariş formunu gönderiniz.</small>";
+
+}
+
+function yonetimiAc(){
+
+document.getElementById("yonetimSifre").value="";
+document.getElementById("sifreHata").textContent="";
+document.getElementById("sifreAlani").style.display="flex";
+
+setTimeout(function(){
+document.getElementById("yonetimSifre").focus();
+},100);
+
+}
+
+function sifreKapat(){
+document.getElementById("sifreAlani").style.display="none";
+}
+
+function yonetimKapat(){
+document.getElementById("yonetimAlani").style.display="none";
+}
+
+function sifreHash(metin){
+
+var h=2166136261;
+
+for(var i=0;i<metin.length;i++){
+
+h^=metin.charCodeAt(i);
+
+h+=(h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24);
+
+h=h>>>0;
+}
+
+return h;
+}
+
+var dogruSifreHash=2452828540;
+
+function sifreKontrol(){
+
+var girilen=
+document.getElementById("yonetimSifre").value.trim();
+
+if(sifreHash(girilen)===dogruSifreHash){
+
+document.getElementById("sifreAlani").style.display="none";
+document.getElementById("yonetimAlani").style.display="flex";
+
+yonetimUrunleriGoster();
+odemeBilgileriniGoster();
+
+}else{
+
+document.getElementById("sifreHata").textContent=
+"❌ Şifre yanlış!";
+
+}
+
+}
+
+function fotoOnizle(){
+
+var dosya=document.getElementById("yonetimFoto").files[0];
+var onizleme=document.getElementById("fotoOnizleme");
+
+if(!dosya){
+onizleme.style.display="none";
+onizleme.src="";
+return;
+}
+
+var reader=new FileReader();
+
+reader.onload=function(e){
+onizleme.src=e.target.result;
+onizleme.style.display="block";
+};
+
+reader.readAsDataURL(dosya);
+
+}
+
+function fotoKucult(dosya,callback){
+
+var reader=new FileReader();
+
+reader.onload=function(e){
+
+var img=new Image();
+
+img.onload=function(){
+
+var maxBoyut=1200;
+var oran=Math.min(1,maxBoyut/Math.max(img.width,img.height));
+
+var canvas=document.createElement("canvas");
+canvas.width=Math.round(img.width*oran);
+canvas.height=Math.round(img.height*oran);
+
+var ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+var sonuc=canvas.toDataURL("image/jpeg",0.75);
+callback(sonuc);
+
+};
+
+img.onerror=function(){
+alert("❌ Fotoğraf okunamadı. Başka bir fotoğraf deneyin.");
+};
+
+img.src=e.target.result;
+
+};
+
+reader.onerror=function(){
+alert("❌ Fotoğraf okunamadı.");
+};
+
+reader.readAsDataURL(dosya);
+
+}
+
+function urunKaydet(){
+
+var ad=document.getElementById("yonetimUrunAdi").value.trim();
+var aciklama=document.getElementById("yonetimAciklama").value.trim();
+var kategori=document.getElementById("yonetimKategori").value;
+
+var normal=parseFloat(
+document.getElementById("yonetimNormalFiyat").value
+)||0;
+
+var indirimli=parseFloat(
+document.getElementById("yonetimIndirimliFiyat").value
+)||normal;
+
+var stok=parseInt(
+document.getElementById("yonetimStok").value
+)||0;
+
+var index=parseInt(
+document.getElementById("duzenlenenIndex").value
+);
+
+if(!ad){
+alert("Ürün adı yazmalısın.");
+return;
+}
+
+var dosya=document.getElementById("yonetimFoto").files[0];
+
+function kaydet(foto){
+
+var yeniUrun={
+isim:ad,
+aciklama:aciklama,
+fiyat:indirimli,
+eskiFiyat:normal>indirimli?normal:0,
+stok:stok,
+kategori:kategori,
+foto:foto
+};
+
+if(index===-1){
+urunler.push(yeniUrun);
+}else{
+urunler[index]=yeniUrun;
+}
+
+localStorage.setItem(
+"scarfslaaUrunler",
+JSON.stringify(urunler)
+);
+
+alert("✅ Ürün kaydedildi.");
+
+formuTemizle();
+urunleriGoster();
+yonetimUrunleriGoster();
+
+}
+
+if(dosya){
+
+fotoKucult(dosya,function(kucukFoto){
+kaydet(kucukFoto);
+});
+
+}else{
+
+var eskiFoto="";
+
+if(index!==-1 && urunler[index]){
+eskiFoto=urunler[index].foto;
+}
+
+kaydet(eskiFoto);
+
+}
+
+}
+
+function formuTemizle(){
+
+document.getElementById("duzenlenenIndex").value="-1";
+document.getElementById("yonetimUrunAdi").value="";
+document.getElementById("yonetimAciklama").value="";
+document.getElementById("yonetimKategori").value="jakar";
+document.getElementById("yonetimNormalFiyat").value="";
+document.getElementById("yonetimIndirimliFiyat").value="";
+document.getElementById("yonetimStok").value="";
+
+document.getElementById("yonetimFoto").value="";
+document.getElementById("fotoOnizleme").style.display="none";
+document.getElementById("fotoOnizleme").src="";
+
+}
+
+function yonetimUrunleriGoster(){
+
+var alan=document.getElementById("yonetimUrunleri");
+alan.innerHTML="";
+
+urunler.forEach(function(urun,index){
+
+var div=document.createElement("div");
+div.className="yonetim-urun";
+
+var fiyat=urun.fiyat+" TL";
+
+if(urun.eskiFiyat>urun.fiyat){
+fiyat=urun.eskiFiyat+" TL → "+urun.fiyat+" TL";
+}
+
+div.innerHTML=
+'<img src="'+urun.foto+'" alt="">'+
+'<strong>'+urun.isim+'</strong><br>'+
+fiyat+
+'<br>Stok: '+urun.stok+
+'<br>Kategori: '+urun.kategori+
+'<button class="kucuk-buton duzenle">✏️ Düzenle</button>'+
+'<button class="kucuk-buton sil">🗑️ Sil</button>'+
+'<div class="temizle"></div>';
+
+div.querySelector(".duzenle").onclick=function(){
+urunDuzenle(index);
+};
+
+div.querySelector(".sil").onclick=function(){
+urunSil(index);
+};
+
+alan.appendChild(div);
+
+});
+
+}
+
+function urunDuzenle(index){
+
+var urun=urunler[index];
+
+document.getElementById("duzenlenenIndex").value=index;
+document.getElementById("yonetimUrunAdi").value=urun.isim;
+document.getElementById("yonetimAciklama").value=urun.aciklama;
+document.getElementById("yonetimKategori").value=urun.kategori;
+document.getElementById("yonetimNormalFiyat").value=
+urun.eskiFiyat>0?urun.eskiFiyat:urun.fiyat;
+document.getElementById("yonetimIndirimliFiyat").value=urun.fiyat;
+document.getElementById("yonetimStok").value=urun.stok;
+
+if(urun.foto){
+
+document.getElementById("fotoOnizleme").src=urun.foto;
+document.getElementById("fotoOnizleme").style.display="block";
+
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function urunSil(index){
+
+if(!confirm("Bu ürünü silmek istediğine emin misin?")) return;
+
+urunler.splice(index,1);
+
+localStorage.setItem(
+"scarfslaaUrunler",
+JSON.stringify(urunler)
+);
+
+urunleriGoster();
+yonetimUrunleriGoster();
+
+}
+
+function odemeBilgileriniGoster(){
+
+document.getElementById("bankaAdi").value=
+odemeBilgileri.banka;
+
+document.getElementById("hesapSahibi").value=
+odemeBilgileri.hesap;
+
+document.getElementById("ibanInput").value=
+odemeBilgileri.iban;
+
+}
+
+function odemeBilgileriniKaydet(){
+
+odemeBilgileri={
+banka:document.getElementById("bankaAdi").value.trim(),
+hesap:document.getElementById("hesapSahibi").value.trim(),
+iban:document.getElementById("ibanInput").value.trim()
+};
+
+localStorage.setItem(
+"scarfslaaOdeme",
+JSON.stringify(odemeBilgileri)
+);
+
+alert("✅ Ödeme bilgileri kaydedildi.");
+
+}
+
+function fotoAc(src){
+
+document.getElementById("buyukFoto").src=src;
+document.getElementById("fotoPenceresi").style.display="flex";
+
+}
+
+function fotoKapat(){
+document.getElementById("fotoPenceresi").style.display="none";
+}
+
+function detayAc(index){
+
+var urun=urunler[index];
+
+document.getElementById("detayFoto").src=urun.foto;
+document.getElementById("detayBaslik").textContent=urun.isim;
+document.getElementById("detayAciklama").textContent=urun.aciklama;
+document.getElementById("detayStok").textContent=
+"Stok: "+urun.stok;
+
+var fiyat="";
+
+if(urun.eskiFiyat>urun.fiyat){
+fiyat=
+'<span class="eski-fiyat">'+urun.eskiFiyat+' TL</span>'+
+urun.fiyat+' TL';
+}else{
+fiyat=urun.fiyat+" TL";
+}
+
+document.getElementById("detayFiyatAlani").innerHTML=fiyat;
+
+document.getElementById("detaySepetButonu").onclick=function(){
+sepeteEkle(index,this);
+};
+
+document.getElementById("urunDetayAlani").style.display="flex";
+
+}
+
+function detayKapat(){
+document.getElementById("urunDetayAlani").style.display="none";
+}
+
+document.getElementById("sepetKapatButonu").onclick=sepetKapat;
+
+document.getElementById("favoriKapatButonu").onclick=favoriKapat;
+
+document.getElementById("siparisKapatButonu").onclick=siparisKapat;
+
+document.getElementById("formAcButonu").onclick=siparisAc;
+
+document.getElementById("formAcButonu2").onclick=function(){
+sepetKapat();
+siparisAc();
+};
+
+document.getElementById("urunArama").addEventListener(
+"input",
+urunleriGoster
+);
+
+document.getElementById("siparisForm").addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+var form=this;
+var anahtar=form.querySelector(
+'input[name="access_key"]'
+).value.trim();
+
+if(!anahtar || anahtar==="BURAYA_ACCESS_KEY"){
+alert("Web3Forms anahtarını eklemen gerekiyor.");
+return;
+}
+
+var buton=form.querySelector("button[type='submit']");
+buton.disabled=true;
+buton.textContent="Gönderiliyor...";
+
+fetch("https://api.web3forms.com/submit",{
+method:"POST",
+body:new FormData(form)
+})
+.then(function(response){
+return response.json();
+})
+.then(function(data){
+
+if(data.success){
+
+alert("✅ Siparişiniz başarıyla gönderildi!");
+
+sepet=[];
+sepetiGoster();
+
+form.reset();
+
+siparisKapat();
+
+}else{
+
+alert("❌ Sipariş gönderilemedi.");
+
+}
+
+})
+.catch(function(){
+
+alert("❌ Bağlantı sırasında hata oluştu.");
+
+})
+.finally(function(){
+
+buton.disabled=false;
+buton.textContent="✅ Siparişi Gönder";
+
+});
+
+});
+
+urunleriGoster();
+sepetiGoster();
+favorileriGoster();
+
+</script>
+
+</body>
+</html>
