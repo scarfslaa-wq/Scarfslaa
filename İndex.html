@@ -470,6 +470,28 @@ margin:0!important
 grid-template-columns:1fr
 }
 }
+
+/* Yönetim paneli düzeltmeleri */
+#sifreAlani, #yonetimAlani{
+  align-items:center;
+  justify-content:center;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+#yonetimAlani .modal-kutu{
+  max-height:88vh;
+  overflow-y:auto;
+  position:relative;
+  z-index:1001;
+}
+#sifreAlani .modal-kutu{
+  position:relative;
+  z-index:1001;
+}
+#yonetimSifre{
+  -webkit-appearance:none;
+  appearance:none;
+}
 </style>
 </head>
 
@@ -499,7 +521,7 @@ grid-template-columns:1fr
 
 <a href="#hakkimizda">Hakkımızda</a>
 <a href="#iletisim">İletişim</a>
-<button onclick="yonetimiAc()" class="yonetim-link">🔐 Yönetim</button>
+<button type="button" id="yonetimAcButonu" class="yonetim-link">🔐 Yönetim</button>
 </nav>
 </header>
 
@@ -647,7 +669,7 @@ zarif ve şık tasarımlarla sizlerle buluşturuyoruz.
 
 <p id="sifreHata" style="color:#c0392b"></p>
 
-<button class="ana-buton" onclick="sifreKontrol()">
+<button type="button" class="ana-buton" id="sifreGirisButonu">
 Giriş Yap
 </button>
 
@@ -1142,6 +1164,7 @@ function yonetimiAc(){
 document.getElementById("yonetimSifre").value="";
 document.getElementById("sifreHata").textContent="";
 document.getElementById("sifreAlani").style.display="flex";
+document.getElementById("sifreAlani").scrollTop=0;
 
 setTimeout(function(){
 document.getElementById("yonetimSifre").focus();
@@ -1535,6 +1558,24 @@ document.getElementById("urunDetayAlani").style.display="none";
 
 document.getElementById("sepetKapatButonu").onclick=sepetKapat;
 
+/* Yönetim butonu: inline onclick yerine güvenilir event listener */
+document.getElementById("yonetimAcButonu").addEventListener("click",function(e){
+  e.preventDefault();
+  yonetimiAc();
+});
+
+document.getElementById("yonetimSifre").addEventListener("keydown",function(e){
+  if(e.key==="Enter"){
+    e.preventDefault();
+    sifreKontrol();
+  }
+});
+
+document.getElementById("sifreGirisButonu").addEventListener("click",function(e){
+  e.preventDefault();
+  sifreKontrol();
+});
+
 document.getElementById("favoriKapatButonu").onclick=favoriKapat;
 
 document.getElementById("siparisKapatButonu").onclick=siparisKapat;
@@ -1615,6 +1656,11 @@ buton.textContent="✅ Siparişi Gönder";
 urunleriGoster();
 sepetiGoster();
 favorileriGoster();
+
+/* Beklenmeyen JavaScript hatasını kullanıcıya sessizce kaybetmemek için */
+window.addEventListener("error",function(e){
+  console.error("SCARFSLAA hata:",e.error||e.message);
+});
 
 </script>
 
