@@ -521,7 +521,7 @@ grid-template-columns:1fr
 
 <a href="#hakkimizda">Hakkımızda</a>
 <a href="#iletisim">İletişim</a>
-<button type="button" id="yonetimAcButonu" class="yonetim-link">🔐 Yönetim</button>
+<button type="button" id="yonetimAcButonu" class="yonetim-link" onclick="yonetimiAc()">🔐 Yönetim</button>
 </nav>
 </header>
 
@@ -1161,14 +1161,12 @@ odemeBilgileri.iban+
 
 function yonetimiAc(){
 
-document.getElementById("yonetimSifre").value="";
-document.getElementById("sifreHata").textContent="";
-document.getElementById("sifreAlani").style.display="flex";
-document.getElementById("sifreAlani").scrollTop=0;
+/* Yönetim panelini doğrudan aç */
+document.getElementById("sifreAlani").style.display="none";
+document.getElementById("yonetimAlani").style.display="flex";
 
-setTimeout(function(){
-document.getElementById("yonetimSifre").focus();
-},100);
+yonetimUrunleriGoster();
+odemeBilgileriniGoster();
 
 }
 
@@ -1557,24 +1555,6 @@ document.getElementById("urunDetayAlani").style.display="none";
 }
 
 document.getElementById("sepetKapatButonu").onclick=sepetKapat;
-
-/* Yönetim butonu: inline onclick yerine güvenilir event listener */
-document.getElementById("yonetimAcButonu").addEventListener("click",function(e){
-  e.preventDefault();
-  yonetimiAc();
-});
-
-document.getElementById("yonetimSifre").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){
-    e.preventDefault();
-    sifreKontrol();
-  }
-});
-
-document.getElementById("sifreGirisButonu").addEventListener("click",function(e){
-  e.preventDefault();
-  sifreKontrol();
-});
 
 document.getElementById("favoriKapatButonu").onclick=favoriKapat;
 
